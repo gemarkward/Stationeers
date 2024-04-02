@@ -21,7 +21,7 @@ alias index r3
 alias itemHash r4
 move currentSelection 1
 main:
-s currentSelection selectionLED Setting
+s selectionLED Setting currentSelection
 sub index currentSelection 1
 mul index currentSelection 2
 add index index 1
@@ -68,5 +68,5 @@ LoopToStart:
 move currentSelection 1
 j main
 LoopToEnd:
-move currentSelection 13
+move currentSelection 12
 j main
