@@ -1,0 +1,33 @@
+alias selectionDisplay d0
+alias nextButton d1
+alias previousButton d2
+alias currentSelection r0
+alias moveNext r1
+alias movePrev r2
+move currentSelection 1
+
+main:
+s currentSelection selectionDisplay Setting
+l moveNext nextButton Setting
+l movePrev previousButton Setting
+bgtz moveNext Next
+bgtz movePrev Previous
+j main
+
+Next:
+add currentSelection currentSelection 1
+bgt currentSelection 13 LoopToStart
+j main
+
+Previous:
+sub currentSelection currentSelection 1
+blt currentSelection 1 LoopToEnd
+j main
+
+LoopToStart:
+move currentSelection 1
+j main
+
+LoopToEnd:
+move currentSelection 13
+j main

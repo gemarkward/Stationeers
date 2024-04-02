@@ -1,0 +1,111 @@
+# 1 - Iron
+# 2 - Copper
+# 3 - Gold
+# 4 - Silver
+# 5 - Lead
+# 6 - Nickel
+# 7 - Silicon
+# 8 - Steel
+# 9 - Electrum
+# 10 - Invar
+# 11 - Constantan
+# 12 - Solder
+# 13 - Charcoal
+alias recipeSelector d0 # Recipe selection display LED
+alias readyLight d1 
+alias furnace d2
+alias furnaceReady r0 # 4 = Red = Not Ready, 2 = Green = Ready
+alias currentTemperature r1
+alias currentPressure r2
+alias minTemperature r3
+alias maxTemperature r4
+alias minPressure r5
+alias maxPressure r6
+alias currentSelection r7
+alias selectionIndex r8
+alias relativeIndex r9
+move furnaceReady 4
+main:
+s readyLight Mode furnaceReady
+l currentSelection recipeSelector Setting
+sub selectionIndex currentSelection 1
+mul relativeIndex selectionIndex 5
+add relativeIndex relativeIndex 1
+jr relativeIndex
+move minTemperature 800 #Iron
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 600 #Copper
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 600 #Gold
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 600 #Silver
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 400 #Lead
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 800 #Nickel
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 900 #Silicon
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 900 #Steel
+move maxTemperature 100000
+move minPressure 1000
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 800 #Electrum
+move maxTemperature 100000
+move minPressure 800
+move maxPressure 2400
+j ReadyCheck
+move minTemperature 1200 #Invar
+move maxTemperature 1500
+move minPressure 18000
+move maxPressure 20000
+j ReadyCheck
+move minTemperature 1000 #Constantan
+move maxTemperature 10000
+move minPressure 20000
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 350 #Solder
+move maxTemperature 550
+move minPressure 1000
+move maxPressure 100000
+j ReadyCheck
+move minTemperature 580 #Charcoal
+move maxTemperature 100000
+move minPressure 100
+move maxPressure 100000
+j ReadyCheck
+ReadyCheck:
+l currentTemperature furnace Temperature
+l currentPressure furnace Pressure
+bgt currentTemperature maxTemperature NotReady
+blt currentTemperature minTemperature NotReady
+bgt currentPressure maxPressure NotReady
+blt currentPressure minPressure NotReady
+move furnaceReady 2
+j main
+NotReady:
+move furnaceReady 4
+j main
