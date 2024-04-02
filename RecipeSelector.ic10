@@ -18,6 +18,7 @@ alias currentSelection r0
 alias moveNext r1
 alias movePrev r2
 alias index r3
+alias itemHash r4
 move currentSelection 1
 main:
 s currentSelection selectionLED Setting
@@ -25,30 +26,31 @@ sub index currentSelection 1
 mul index currentSelection 2
 add index index 1
 jr index
-s hashMem HASH("ItemIronIngot") # 1 - Iron
+move itemHash HASH("ItemIronIngot") # 1 - Iron
 j Continue
-s hashMem HASH("ItemCopperIngot") # 2 - Copper
+move itemHash HASH("ItemCopperIngot") # 2 - Copper
 j Continue
-s hashMem HASH("ItemGoldIngot") # 3 - Gold
+move itemHash HASH("ItemGoldIngot") # 3 - Gold
 j Continue
-s hashMem HASH("ItemSilverIngot") # 4 - Silver
+move itemHash HASH("ItemSilverIngot") # 4 - Silver
 j Continue
-s hashMem HASH("ItemLeadIngot") # 5 - Lead
+move itemHash HASH("ItemLeadIngot") # 5 - Lead
 j Continue
-s hashMem HASH("ItemNickelIngot") # 6 - Nickel
+move itemHash HASH("ItemNickelIngot") # 6 - Nickel
 j Continue
-s hashMem HASH("ItemIngotSilicon") # 7 - Silicon
+move itemHash HASH("ItemIngotSilicon") # 7 - Silicon
 j Continue
-s hashMem HASH("ItemSteelIngot") # 8 - Steel
+move itemHash HASH("ItemSteelIngot") # 8 - Steel
 j Continue
-s hashMem HASH("ItemElectrumIngot") # 9 - Electrum
+move itemHash HASH("ItemElectrumIngot") # 9 - Electrum
 j Continue
-s hashMem HASH("ItemInvarIngot") # 10 - Invar
+move itemHash HASH("ItemInvarIngot") # 10 - Invar
 j Continue
-s hashMem HASH("ItemConstantanIngot") # 11 - Constantan
+move itemHash HASH("ItemConstantanIngot") # 11 - Constantan
 j Continue
-s hashMem HASH("ItemSolderIngot") # 12 - Solder
+move itemHash HASH("ItemSolderIngot") # 12 - Solder
 Continue:
+s hashMem Setting itemHash
 l moveNext nextButton Setting
 l movePrev previousButton Setting
 bgtz moveNext Next
