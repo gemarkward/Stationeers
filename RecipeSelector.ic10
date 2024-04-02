@@ -26,29 +26,29 @@ sub index currentSelection 1
 mul index currentSelection 2
 add index index 1
 jr index
-move itemHash HASH("ItemIronIngot") # 1 - Iron
+move itemHash -1301215609 #Iron
 j Continue
-move itemHash HASH("ItemCopperIngot") # 2 - Copper
+move itemHash -404336834 #Copper
 j Continue
-move itemHash HASH("ItemGoldIngot") # 3 - Gold
+move itemHash 226410516 #Gold
 j Continue
-move itemHash HASH("ItemSilverIngot") # 4 - Silver
+move itemHash -929742000 #Silver
 j Continue
-move itemHash HASH("ItemLeadIngot") # 5 - Lead
+move itemHash 2134647745	 #Lead
 j Continue
-move itemHash HASH("ItemNickelIngot") # 6 - Nickel
+move itemHash -1406385572 #Nickel
 j Continue
-move itemHash HASH("ItemIngotSilicon") # 7 - Silicon
+move itemHash -1065850720 #Silicon
 j Continue
-move itemHash HASH("ItemSteelIngot") # 8 - Steel
+move itemHash -654790771 #Steel
 j Continue
-move itemHash HASH("ItemElectrumIngot") # 9 - Electrum
+move itemHash 502280180 #Electrum
 j Continue
-move itemHash HASH("ItemInvarIngot") # 10 - Invar
+move itemHash -297990285 #Invar
 j Continue
-move itemHash HASH("ItemConstantanIngot") # 11 - Constantan
+move itemHash 1058547521 #Constantan
 j Continue
-move itemHash HASH("ItemSolderIngot") # 12 - Solder
+move itemHash -82508479 #Solder
 Continue:
 s hashMem Setting itemHash
 l moveNext nextButton Setting
