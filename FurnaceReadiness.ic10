@@ -10,7 +10,6 @@
 # 10 - Invar
 # 11 - Constantan
 # 12 - Solder
-# 13 - Charcoal
 alias recipeSelector d0 # Recipe selection display LED
 alias readyLight d1 
 alias furnace d2
@@ -22,8 +21,8 @@ alias maxTemperature r4
 alias minPressure r5
 alias maxPressure r6
 alias currentSelection r7
-alias selectionIndex r8
-alias relativeIndex r9
+alias selectionIndex r8 # currentSelection - 1
+alias relativeIndex r9 # number of lines to jump down to set min/max
 move furnaceReady 4
 main:
 s readyLight Mode furnaceReady
@@ -90,11 +89,6 @@ j ReadyCheck
 move minTemperature 350 #Solder
 move maxTemperature 550
 move minPressure 1000
-move maxPressure 100000
-j ReadyCheck
-move minTemperature 580 #Charcoal
-move maxTemperature 100000
-move minPressure 100
 move maxPressure 100000
 j ReadyCheck
 ReadyCheck:

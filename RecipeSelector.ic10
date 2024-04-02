@@ -1,33 +1,70 @@
-alias selectionDisplay d0
+# 1 - Iron
+# 2 - Copper
+# 3 - Gold
+# 4 - Silver
+# 5 - Lead
+# 6 - Nickel
+# 7 - Silicon
+# 8 - Steel
+# 9 - Electrum
+# 10 - Invar
+# 11 - Constantan
+# 12 - Solder
+alias selectionLED d0
 alias nextButton d1
 alias previousButton d2
+alias hashMem d3
 alias currentSelection r0
 alias moveNext r1
 alias movePrev r2
+alias index r3
 move currentSelection 1
-
 main:
-s currentSelection selectionDisplay Setting
+s currentSelection selectionLED Setting
+sub index currentSelection 1
+mul index currentSelection 2
+add index index 1
+jr index
+s hashMem HASH("ItemIronIngot") # 1 - Iron
+j Continue
+s hashMem HASH("ItemCopperIngot") # 2 - Copper
+j Continue
+s hashMem HASH("ItemGoldIngot") # 3 - Gold
+j Continue
+s hashMem HASH("ItemSilverIngot") # 4 - Silver
+j Continue
+s hashMem HASH("ItemLeadIngot") # 5 - Lead
+j Continue
+s hashMem HASH("ItemNickelIngot") # 6 - Nickel
+j Continue
+s hashMem HASH("ItemIngotSilicon") # 7 - Silicon
+j Continue
+s hashMem HASH("ItemSteelIngot") # 8 - Steel
+j Continue
+s hashMem HASH("ItemElectrumIngot") # 9 - Electrum
+j Continue
+s hashMem HASH("ItemInvarIngot") # 10 - Invar
+j Continue
+s hashMem HASH("ItemConstantanIngot") # 11 - Constantan
+j Continue
+s hashMem HASH("ItemSolderIngot") # 12 - Solder
+Continue:
 l moveNext nextButton Setting
 l movePrev previousButton Setting
 bgtz moveNext Next
 bgtz movePrev Previous
 j main
-
 Next:
 add currentSelection currentSelection 1
-bgt currentSelection 13 LoopToStart
+bgt currentSelection 12 LoopToStart
 j main
-
 Previous:
 sub currentSelection currentSelection 1
 blt currentSelection 1 LoopToEnd
 j main
-
 LoopToStart:
 move currentSelection 1
 j main
-
 LoopToEnd:
 move currentSelection 13
 j main
