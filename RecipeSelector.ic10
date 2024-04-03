@@ -23,7 +23,7 @@ LoopToStart:
 move currentSelection 1
 j End
 LoopToEnd:
-move currentSelection 13
+move currentSelection 12
 j End
 End:
 s currentSelection hashMem Setting
