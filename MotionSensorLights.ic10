@@ -1,0 +1,20 @@
+#Change light and occupancy sensor/switch names
+#inside the HASH("devicename") for each room
+#Use labeler to name lights and switches
+#to match the names found here
+#Each room will need unique name and IC10 chip
+define lightName HASH("foyerLight")
+define sensorName HASH("foyerSensor")
+alias roomOccupied r0
+main:
+lbn roomOccupied 322782515 sensorName Activate Minimum
+sbn HASH("StructureLight") lightName On roomOccupied
+sbn HASH("StructureLightBattery") lightName On roomOccupied
+sbn HASH("StructureLightLong") lightName On roomOccupied
+sbn HASH("StructureLightLongAngled") lightName On roomOccupied
+sbn HASH("StructureLightLongWide") lightName On roomOccupied
+sbn HASH("StructureLightRound") lightName On roomOccupied
+sbn HASH("StructureLightRoundAngled") lightName On roomOccupied
+sbn HASH("StructureLightRoundSmall") lightName On roomOccupied
+yield
+j main
