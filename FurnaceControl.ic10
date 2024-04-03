@@ -1,0 +1,44 @@
+define analyzerHash HASH("ItemPipeAnalyzer")
+define fuelAnalyzerName HASH("FuelPipeAnalyzer")
+define heatMargin 50
+define pressureMargin 200
+alias furnace d0
+alias fuelMix d1
+alias minTempMem d2
+alias minPresMem d3
+alias currentTemp r0
+alias currentPres r1
+alias targetTemp r2
+alias targetPres r3
+alias minPres r4
+alias maxPres r5
+alias minTemp r6
+alias maxTemp r7
+alias goodTemp r8
+alias goodPres r9
+s fuelMix Setting 1
+main:
+yield
+# Load variables
+l currentTemp furnace Temperature
+l currentPres furnace Pressure
+l minTemp minTempMem Setting
+l minPres minPresMem Setting
+# Set for +-50 temp and +-500 pres
+add minTemp minTemp 50
+add maxTemp minTemp 50
+add minPres minPres 500
+add maxPres minPres 500
+# Vent pressure if too high
+sgt currentPres maxPres furnace SettingInput 0
+sgt currentPres maxPres furnace SettingOutput 10
+bgt currentPres maxPres main
+# Set fuel/cold gas
+sgt currentTemp maxTemp fuelMix Setting 0
+slt currentTemp minTemp fuelMix Setting 1
+# Set input to heat/cool
+sgt currentTemp maxTemp furnace SettingInput 10
+slt currentTemp minTemp furnace SettingInput 5
+# Close output to build pressure
+slt currentPres minPres furnace SettingOutput 0
+j main

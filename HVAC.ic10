@@ -1,0 +1,67 @@
+#Define constants
+define minTemperature 294.15
+define maxTemperature 302.15
+define perfectTemp 298.15
+define heaterHash HASH("StructureWallHeater")
+define coolerHash HASH("StructureWallCooler")
+define lightHash HASH("StructureGrowLight")
+
+#Define aliases
+alias gasSensor d0
+alias tempDisplay d1
+alias daylightSensor d2
+alias currentTemp r0
+alias heaterOn r1
+alias coolerOn r2
+alias dayTime r3
+
+#Start progam loop
+main:
+l dayTime daylightSensor Activate
+sb lightHash On dayTime
+#Check temperature
+l currentTemp gasSensor Temperature
+#Set temperature on display
+s tempDisplay Setting currentTemp
+#Check heater status
+lb heaterOn heaterHash On Sum #greater than zero means at least one heater is on
+#Check cooler status
+lb coolerOn coolerHash On Sum #greater than zero means at least one cooler is on
+#If heating, continue to heat
+bgtz heaterOn Heat
+#If cooling, continue to cool
+bgtz coolerOn Cool
+#If too hot, cool
+bgt currentTemp maxTemperature CoolerOn
+#If too cool, heat
+blt currentTemp minTemperature HeaterOn
+
+j main #Restart main loop
+
+#Define functions
+
+Heat:
+bgt currentTemp perfectTemp HeaterOff
+bgtz coolerOn CoolerOff #keep heaters and coolers from running at the same time
+j main
+
+Cool:
+blt currentTemp perfectTemp CoolerOff
+bgtz heaterOn HeaterOff #keep heaters and coolers from running at the same time
+j main
+
+HeaterOn:
+sb heaterHash On 1
+j main
+
+CoolerOn:
+sb coolerHash On 1
+j main
+
+HeaterOff:
+sb heaterHash On 0
+j main
+
+CoolerOff:
+sb coolerHash On 0
+j main
