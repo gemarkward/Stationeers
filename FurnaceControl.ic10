@@ -1,7 +1,3 @@
-define analyzerHash HASH("ItemPipeAnalyzer")
-define fuelAnalyzerName HASH("FuelPipeAnalyzer")
-define heatMargin 50
-define pressureMargin 200
 alias furnace d0
 alias fuelMix d1
 alias minTempMem d2
@@ -15,6 +11,7 @@ alias minPres r5
 alias furnaceInput r6
 alias furnaceOutput r7
 alias fuelRatio r8 
+alias coolingTemp r9
 move furnaceInput 0
 move furnaceOutput 0
 
@@ -29,8 +26,9 @@ l currentTemp furnace Temperature
 l currentPres furnace Pressure
 # Set target temp and pres
 add targetTemp minTemp 100
+add coolingTemp targetTemp 100
 add targetPres minPres 800
-slt fuelRatio currentTemp targetTemp
+slt fuelRatio currentTemp coolingTemp
 s fuelMix Setting fuelRatio
 bgtal currentPres targetPres IncreaseOutput
 bltal currentPres targetPres DecreaseOutput
