@@ -43,20 +43,20 @@ j main
 
 IncreaseInput:
 add furnaceInput furnaceInput .5
-max furnaceInput furnaceInput 20
+min furnaceInput furnaceInput 20
 j ra
 
 DecreaseInput:
 sub furnaceInput furnaceInput .5
-min furnaceInput furnaceInput 0
+max furnaceInput furnaceInput 0
 j ra
 
 IncreaseOutput:
 add furnaceOutput furnaceOutput .5
-max furnaceOutput furnaceOutput 30
+min furnaceOutput furnaceOutput 30
 j ra
 
 DecreaseOutput:
 sub furnaceInput furnaceInput .5
-min furnaceOutput furnaceOutput 0
+max furnaceOutput furnaceOutput 0
 j ra
