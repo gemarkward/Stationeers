@@ -10,35 +10,55 @@ alias currentTemp r0
 alias currentPres r1
 alias targetTemp r2
 alias targetPres r3
-alias minPres r4
-alias maxPres r5
-alias minTemp r6
-alias maxTemp r7
-alias goodTemp r8
-alias goodPres r9
-s fuelMix Setting 1
+alias minTemp r4
+alias minPres r5
+alias furnaceInput r6
+alias furnaceOutput r7
+alias fuelRatio r8 
+move furnaceInput 0
+move furnaceOutput 0
+
 main:
-yield
+s furnace SettingInput furnaceInput
+s furnace SettingOutput furnaceOutput
+sleep 1
 # Load variables
-l currentTemp furnace Temperature
-l currentPres furnace Pressure
 l minTemp minTempMem Setting
 l minPres minPresMem Setting
-# Set for +-50 temp and +-500 pres
-add minTemp minTemp 50
-add maxTemp minTemp 50
-add minPres minPres 500
-add maxPres minPres 500
-# Vent pressure if too high
-sgt currentPres maxPres furnace SettingInput 0
-sgt currentPres maxPres furnace SettingOutput 10
-bgt currentPres maxPres main
-# Set fuel/cold gas
-sgt currentTemp maxTemp fuelMix Setting 0
-slt currentTemp minTemp fuelMix Setting 1
-# Set input to heat/cool
-sgt currentTemp maxTemp furnace SettingInput 10
-slt currentTemp minTemp furnace SettingInput 5
-# Close output to build pressure
-slt currentPres minPres furnace SettingOutput 0
+l currentTemp furnace Temperature
+l currentPres furnace Pressure
+# Set target temp and pres
+add targetTemp minTemp 100
+add targetPres minPres 800
+slt fuelRatio currentTemp targetTemp
+s fuelMix Setting fuelRatio
+bgtal currentPres targetPres IncreaseOutput
+bltal currentPres targetPres DecreaseOutput
+beqz fuelRatio Cool
+bltal currentTemp targetTemp IncreaseInput
+bgtal currentTemp targetTemp DecreaseInput
 j main
+
+Cool:
+move furnaceInput 10
+j main
+
+IncreaseInput:
+add furnaceInput furnaceInput .5
+max furnaceInput furnaceInput 20
+j ra
+
+DecreaseInput:
+sub furnaceInput furnaceInput .5
+min furnaceInput furnaceInput 0
+j ra
+
+IncreaseOutput:
+add furnaceOutput furnaceOutput .5
+max furnaceOutput furnaceOutput 30
+j ra
+
+DecreaseOutput:
+sub furnaceInput furnaceInput .5
+min furnaceOutput furnaceOutput 0
+j ra
