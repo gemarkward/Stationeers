@@ -1,0 +1,21 @@
+define maxPres 60000
+alias gasTank d0
+alias tankDisplay d1
+alias pressure r0
+alias tankFill r1
+s tankDisplay Mode 1
+main:
+l pressure gasTank Pressure
+div tankFill maxPres pressure
+s tankDisplay Setting tankFill
+bgt tankFill .66 Green
+bgt tankFill .33 Yellow
+s tankDisplay Color 4
+j main
+
+Green:
+s tankDisplay Color 2
+j main
+Yellow:
+s tankDisplay Color 5
+j main
