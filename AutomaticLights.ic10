@@ -1,0 +1,17 @@
+define nightLightName HASH("Night Light")
+alias daylightSensor d0
+alias dayTime r0
+alias nightTime r1
+main:
+l dayTime daylightSensor Activate
+seqz nightTime dayTime
+sbn HASH("StructureLight") nightLightName On nightTime
+sbn HASH("StructureLightBattery") nightLightName On nightTime
+sbn HASH("StructureLightLong") nightLightName On nightTime
+sbn HASH("StructureLightLongAngled") nightLightName On nightTime
+sbn HASH("StructureLightLongWide") nightLightName On nightTime
+sbn HASH("StructureLightRound") nightLightName On nightTime
+sbn HASH("StructureLightRoundAngled") nightLightName On nightTime
+sbn HASH("StructureLightRoundSmall") nightLightName On nightTime
+sb HASH("StructureGrowLight") On dayTime
+j main
