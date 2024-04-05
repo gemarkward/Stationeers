@@ -1,0 +1,38 @@
+# Change min/max temps here
+# Temps are in K = C+273.15
+define minTemp 294.19 
+define maxTemp 302.19
+alias gasSensor d0
+alias coolValve d1
+alias heatValve d2
+alias targetTemp r0
+alias currentTemp r1
+alias needHeating r2
+alias needCooling r3
+alias canHeat r4
+alias canCool r5
+alias cooling r6
+alias heating r7
+add targetTemp minTemp maxTemp
+div targetTemp targetTemp 2
+
+main:
+#Load variables
+l cooling coolValve On
+l heating heatValve On
+l currentTemp gasSensor Temperature
+#If outside median temp, can heat/cool
+slt canHeat currentTemp targetTemp
+sgt canCool currentTemp targetTemp
+#If outside max/min temp, must heat/cool
+slt needHeating currentTemp minTemp
+sgt needCooling currentTemp maxTemp
+#If cooling/heating and still can, continue
+and cooling cooling canCool
+and heating heating canHeat
+#If above is true or cooling/heating needed, do
+or cooling cooling needCooling
+or heating heating needHeating
+#Activate valves
+s coolValve On cooling
+s heatValve On heating
