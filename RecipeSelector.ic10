@@ -1,9 +1,9 @@
-alias hashMem d0
 alias nextButton d1
 alias previousButton d2
 alias currentSelection r0
 alias moveNext r1
 alias movePrev r2
+alias index r3
 move currentSelection 1
 main:
 l moveNext nextButton Setting
@@ -13,7 +13,7 @@ bgtz movePrev Previous
 j main
 Next:
 add currentSelection currentSelection 1
-bgt currentSelection 12 LoopToStart
+bgt currentSelection 17 LoopToStart
 j End
 Previous:
 sub currentSelection currentSelection 1
@@ -23,22 +23,47 @@ LoopToStart:
 move currentSelection 1
 j End
 LoopToEnd:
-move currentSelection 13
+move currentSelection 17
 j End
 End:
-s currentSelection hashMem Setting
-seq currentSelection 1 hashMem HASH("ItemIronIngot") # 1 - Iron
-seq currentSelection 2 hashMem HASH("ItemCopperIngot") # 2 - Copper
-seq currentSelection 3 hashMem HASH("ItemGoldIngot") # 3 - Gold
-seq currentSelection 4 hashMem HASH("ItemSilverIngot") # 4 - Silver
-seq currentSelection 5 hashMem HASH("ItemLeadIngot") # 5 - Lead
-seq currentSelection 6 hashMem HASH("ItemNickelIngot") # 6 - Nickel
-seq currentSelection 7 hashMem HASH("ItemIngotSilicon") # 7 - Silicon
-seq currentSelection 8 hashMem HASH("ItemSteelIngot") # 8 - Steel
-seq currentSelection 9 hashMem HASH("ItemElectrumIngot") # 9 - Electrum
-seq currentSelection 10 hashMem HASH("ItemInvarIngot") # 10 - Invar
-seq currentSelection 11 hashMem HASH("ItemConstantanIngot") # 11 - Constantan
-seq currentSelection 12 hashMem HASH("ItemSolderIngot") # 12 - Solder
+sub index currentSelection 1
+mul index currentSelection 2
+add index index 1
+jr index
+s db Setting HASH("ItemIronIngot")
+j main
+s db Setting HASH("ItemCopperIngot")
+j main
+s db Setting HASH("ItemGoldIngot")
+j main
+s db Setting HASH("ItemSilverIngot")
+j main
+s db Setting HASH("ItemLeadIngot")
+j main
+s db Setting HASH("ItemNickelIngot")
+j main
+s db Setting HASH("ItemIngotSilicon")
+j main
+s db Setting HASH("ItemSteelIngot")
+j main
+s db Setting HASH("ItemElectrumIngot")
+j main
+s db Setting HASH("ItemInvarIngot")
+j main
+s db Setting HASH("ItemConstantanIngot")
+j main
+s db Setting HASH("ItemSolderIngot")
+j main
+s db Setting HASH("ItemAstroloyIngot")
+j main
+s db Setting HASH("ItemHastelloyIngot")
+j main
+s db Setting HASH("ItemInconelIngot")
+j main
+s db Setting HASH("ItemWaspaloyIngot")
+j main
+s db Setting HASH("ItemStelliteIngot")
+j main
 s nextButton Setting 0
 s previousButton Setting 0
 j main
